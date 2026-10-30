@@ -1,8 +1,0 @@
-How is elastic useful - give some enterprose level use cases.
-How is this different than tradiational databases - can we combine both?
-ELK / EFK / BEATS / Alastic Agents / LogStash / Fleets --> these should be shown the ELastic stack Architecture. Few bullet points should be enough. You can create multiple enterprise level architectures combining these components. Keep in mind about the scaling. diployments and upgrades in mind.
-Talk about the different types nodes.
-Talk about SHARD, Replicas.
-
-Different types of nodes in a cluster.
-
