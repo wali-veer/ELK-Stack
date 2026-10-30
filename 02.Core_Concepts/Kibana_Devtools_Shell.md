@@ -54,6 +54,6 @@ Console usually lets you execute the request at the cursor with its run control 
 
 ## Screenshot
 
-![Console Shell tab showing a CAT shards request and response](./Shell.png)
+![Console Shell tab showing a CAT shards request and response](./images/Shell.png)
 
 The screenshot contains environment-specific index names and internal node addresses. Redact those details before sharing publicly.

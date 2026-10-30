@@ -30,4 +30,4 @@ Before sharing history exports or screenshots, inspect them for secrets, interna
 
 ## Screenshot
 
-![Console History tab listing previously run requests](./History.png)
+![Console History tab listing previously run requests](./images/History.png)

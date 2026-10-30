@@ -44,6 +44,6 @@ If you are unsure, begin with a harmless read such as `GET /` and inspect the re
 
 ## Screenshot
 
-![Console Config tab with general settings, autocomplete, and variables](./Config.png)
+![Console Config tab with general settings, autocomplete, and variables](./images/Config.png)
 
 The screenshot's Elasticsearch host is environment-specific. Redact the URL and identifiers before publishing.

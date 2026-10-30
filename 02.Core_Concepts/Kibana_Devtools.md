@@ -42,15 +42,15 @@ Review and redact endpoint URLs, internal addresses, index names, and account/de
 
 ### Shell
 
-![Kibana Dev Tools Console Shell tab](./Shell.png)
+![Kibana Dev Tools Console Shell tab](./images/Shell.png)
 
 ### History
 
-![Kibana Dev Tools Console History tab](./History.png)
+![Kibana Dev Tools Console History tab](./images/History.png)
 
 ### Config
 
-![Kibana Dev Tools Console Config tab](./Config.png)
+![Kibana Dev Tools Console Config tab](./images/Config.png)
 
 ## Related pages
 
