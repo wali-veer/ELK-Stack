@@ -1,0 +1,3 @@
+Talk little bit about REST APIs that we use to communicate with Elastic search.
+We can use CURL, Postman - but, we generally use the KIBANA for elestic search,
+Take few examples, preferably related to IT banking application observability - GET, PUT, POST, DELETE etc - and explain the URL, Query/subquery param, request body/JSON etc.
