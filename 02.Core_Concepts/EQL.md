@@ -1,30 +1,50 @@
 # Event Query Language (EQL)
 
-> EQL is for finding relationships and sequences in time-stamped event data.
+> EQL makes event relationships and sequences explicit—especially useful when the order of activity matters.
 
 ## Table of contents
 
 - [When EQL helps](#when-eql-helps)
-- [A simple event query](#a-simple-event-query)
-- [A sequence query](#a-sequence-query)
-- [Data requirements and tuning](#data-requirements-and-tuning)
+- [Event queries](#event-queries)
+- [Sequences and join keys](#sequences-and-join-keys)
+- [Run EQL through the API](#run-eql-through-the-api)
+- [Data requirements and query quality](#data-requirements-and-query-quality)
+- [EQL in an enterprise detection workflow](#eql-in-an-enterprise-detection-workflow)
 - [References](#references)
 
 ## When EQL helps
 
-Use EQL when the question is about a **pattern across events**, not just whether one document matches. EQL supports event queries and ordered sequences, making it useful for threat hunting and other event-centric investigations.
+Many search languages are good at asking whether one event matches conditions. EQL adds syntax for asking whether a **series of events** occurred in a particular order, optionally within a time window and for the same entity.
 
-EQL is not a replacement for every Elasticsearch query language. For ordinary filtering and aggregation, Query DSL or Kibana Query Language may be a better fit. Choose the language that makes the intent clearest.
+That makes EQL useful for threat hunting, detection engineering, and other event-centric investigations. It is not the best tool for every query: use Query DSL for general search and aggregations, or KQL for filtering in Kibana, when those express the question more directly.
 
-## A simple event query
+## Event queries
 
-This example finds process events for a given process name:
+An event query selects events from a category:
 
 ```eql
 process where process.name == "my-test-process"
 ```
 
-Run it through the EQL search API in Console:
+The category (`process`) and field (`process.name`) need to match the actual event schema and mappings. ECS conventions are supported by EQL defaults, but ECS is a schema recommendation—not an automatic guarantee that every incoming event has those fields.
+
+## Sequences and join keys
+
+A sequence states ordered event clauses. This example looks for a process event followed by an outgoing network event associated with the same process entity:
+
+```eql
+sequence by process.entity_id with maxspan=5m
+  [process where process.name == "my-test-process"]
+  [network where network.direction == "outgoing"]
+```
+
+Read this as: within five minutes, find the first event, then a later event matching the second clause, with the same `process.entity_id`.
+
+The `by` key is central. Without a reliable key, events from unrelated processes could be correlated—or valid activity could be missed. Confirm that the key is populated consistently in every relevant event category. Sequence order follows event timestamps, so timestamp accuracy and clock synchronization matter.
+
+## Run EQL through the API
+
+In Console, the EQL search endpoint accepts the query in a JSON body:
 
 ```http
 POST logs-endpoint.events.process-*/_eql/search
@@ -34,27 +54,38 @@ POST logs-endpoint.events.process-*/_eql/search
 }
 ```
 
-Replace the index pattern and process name with values that exist in your lab. EQL returns events in time order; set a suitable time range and result size for the investigation.
+Replace the example index pattern and event values with those in your environment. Use a bounded index pattern and, where appropriate, a time range:
 
-## A sequence query
-
-Sequences can express ordered events. This illustrative example looks for a process event followed by a network event associated with the same process entity:
-
-```eql
-sequence by process.entity_id with maxspan=5m
-  [process where process.name == "my-test-process"]
-  [network where network.direction == "outgoing"]
+```http
+POST logs-endpoint.events.process-*/_eql/search
+{
+  "query": "process where process.name == \"my-test-process\"",
+  "filter": {
+    "range": {
+      "@timestamp": {
+        "gte": "now-1h",
+        "lte": "now"
+      }
+    }
+  },
+  "size": 10
+}
 ```
 
-The sequence is meaningful only if the data has consistent timestamps and `process.entity_id` is populated on both event types. Adapt the fields to the schema and event relationships in your data; a syntactically valid query with unsuitable fields can return no useful matches.
+Check the current API reference for exact request options and response fields supported by your Elasticsearch version.
 
-## Data requirements and tuning
+## Data requirements and query quality
 
-- EQL generally expects a timestamp field (by default ECS `@timestamp`) and an event category field (by default ECS `event.category`). `any` can be used when intentionally matching without a category.
-- ECS is recommended because EQL's defaults align with ECS fields, but a mapping/schema plan is still essential.
-- Use a bounded index pattern and time range; long sequence windows and broad data scans can be expensive.
-- Validate the query on representative data, including expected missing/null fields and timestamp quality.
-- Measure both detection quality and cost: useful detections should be explainable, reproducible, and tuned to reduce irrelevant matches.
+- EQL searches generally need a timestamp field (default `@timestamp`) and an event-category field (default `event.category`). The `any` category can be used when intentionally matching without a category.
+- Confirm field types and mappings; values that look similar can have different mappings across data streams.
+- Bound both the data scope and sequence duration. Wide searches and long `maxspan` windows can increase resource cost and produce ambiguous correlations.
+- Test against known positive examples and realistic benign activity. A query returning zero results may indicate no matching behavior, poor data coverage, or a schema mismatch.
+- Check timestamp quality, entity identifiers, null fields, and event ordering before tuning the condition itself.
+- Choose `size` intentionally; it controls returned results, not necessarily the total query work.
+
+## EQL in an enterprise detection workflow
+
+Treat a detection as an operational artifact, not just a query string. Document the behavior it represents, required fields and data sources, expected false positives, time bounds, owner, and response action. Version it in source control, validate it on representative data, and monitor both detection quality and query cost over time.
 
 ## References
 

@@ -40,9 +40,17 @@ For example, `GET /` reads cluster information. A request such as `DELETE /some-
 
 Review and redact endpoint URLs, internal addresses, index names, and account/deployment identifiers before publishing these images publicly.
 
-- [Shell screenshot](./Shell.png)
-- [History screenshot](./History.png)
-- [Config screenshot](./Config.png)
+### Shell
+
+![Kibana Dev Tools Console Shell tab](./Shell.png)
+
+### History
+
+![Kibana Dev Tools Console History tab](./History.png)
+
+### Config
+
+![Kibana Dev Tools Console Config tab](./Config.png)
 
 ## Related pages
 
