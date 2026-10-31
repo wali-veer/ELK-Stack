@@ -41,3 +41,98 @@ POST electronics_store/_update/1
 DELETE electronics_store/_doc/1
 
 DELETE test-index
+
+
+# BULK APIs
+Mention some benefits of Bulk APIs
+
+POST /electronics_store/_bulk
+{
+   "index":{
+      "_id":"3"
+   }
+}{
+   "name":"Smartphone",
+   "price":699
+}{
+   "index":{
+      "_id":"4"
+   }
+}{
+   "name":"Laptop",
+   "price":1200
+}
+
+
+GET electronics_store/_search
+
+
+GET /electronics_store/_doc/4
+GET /electronics_store/_doc/3
+
+
+POST /electronics_store/_bulk
+{
+   "index":{
+     
+   }
+}{
+   "name":"Smart Watch",
+   "price":149.99
+}{
+   "index":{
+     
+   }
+}{
+   "name":"Tablet",
+   "price":450
+}
+
+
+POST /_bulk
+{
+   "index":{
+      "_index":"electronics_store",
+      "_id":"10"
+   }
+}{
+   "name":"Headphones",
+   "price":199
+}{
+   "index":{
+      "_index":"home_appliances",
+      "_id":"1"
+   }
+}{
+   "name":"Air Purifier",
+   "price":299
+}
+
+
+GET home_appliances/_search
+
+
+GET /_cat/indices/home_appliances?v
+
+
+POST /electronics_store/_bulk
+{
+   "create":{
+      "_id":"20"
+   }
+}{
+   "name":"Camera",
+   "price":800
+}{
+   "update":{
+      "_id":"1"
+   }
+}{
+   "doc":{
+      "price":649
+   }
+}{
+   "delete":{
+      "_id":"2"
+   }
+}

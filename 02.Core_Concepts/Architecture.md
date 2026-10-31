@@ -13,7 +13,6 @@
 - [Shard design and operational trade-offs](#shard-design-and-operational-trade-offs)
 - [Deployment models change the operator's role](#deployment-models-change-the-operators-role)
 - [Production design questions](#production-design-questions)
-- [References](#references)
 
 ## The architecture at a glance
 
@@ -141,10 +140,3 @@ Before calling a design production-ready, ask:
 4. Are shard sizes, mappings, and lifecycle policies appropriate for the data?
 5. Who can change cluster settings, index templates, and retention—and how are those changes reviewed?
 6. Which metrics or alerts indicate real user impact rather than merely a component being busy?
-
-## References
-
-- [Clusters, nodes, and shards](https://www.elastic.co/docs/deploy-manage/distributed-architecture/clusters-nodes-shards)
-- [Reading and writing documents](https://www.elastic.co/docs/deploy-manage/distributed-architecture/reading-and-writing-documents)
-- [Shard sizing guidance](https://www.elastic.co/docs/deploy-manage/production-guidance/optimize-performance/size-shards)
-- [Snapshot and restore](https://www.elastic.co/docs/deploy-manage/tools/snapshot-and-restore)

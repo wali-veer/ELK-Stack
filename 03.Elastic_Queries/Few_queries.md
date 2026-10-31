@@ -28,7 +28,6 @@ This guide expands the administration requests collected in `Few_queries`. It re
 - [5. Snapshots and restores](#5-snapshots-and-restores)
 - [6. Task cancellation](#6-task-cancellation)
 - [Queries consolidated or omitted](#queries-consolidated-or-omitted)
-- [References](#references)
 - [Before publishing](#before-publishing)
 
 ## How to use this guide
@@ -341,26 +340,6 @@ POST /_tasks/NODE_ID:TASK_NUMBER/_cancel
 - `GET /_search/slowlog` was removed as an invalid slow-log retrieval approach; the guide explains where slow logs are found and how to set thresholds.
 - CAT outputs are useful for interactive inspection, but automation should use documented JSON APIs.
 
-## References
-
-- [Health report API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-health-report)
-- [Cluster health API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-health)
-- [Cluster statistics API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-stats)
-- [Cluster settings API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-get-settings)
-- [Cluster state API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-state)
-- [Nodes Stats API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-stats)
-- [Hot threads API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-hot-threads)
-- [Tasks API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-tasks-get)
-- [Cancel task API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-tasks-cancel)
-- [Index settings API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-settings)
-- [Force merge API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-forcemerge)
-- [Cluster Allocation Explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-allocation-explain)
-- [Cluster Reroute API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-reroute)
-- [Snapshot and restore](https://www.elastic.co/docs/deploy-manage/tools/snapshot-and-restore)
-- [Security user API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-user)
-- [CAT health API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-health)
-- [CAT master API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-master)
-- [Search slow logs](https://www.elastic.co/docs/deploy-manage/monitor/logging-configuration/slow-logs)
 
 ## Before publishing
 

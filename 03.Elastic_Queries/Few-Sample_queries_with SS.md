@@ -18,7 +18,6 @@ These are practical CAT and cluster-health API requests for checking cluster sta
 - [10. Full index view](#10-full-index-view)
 - [11. Largest indices first](#11-largest-indices-first)
 - [Further administration examples](#further-administration-examples)
-- [References](#references)
 - [Before publishing screenshots](#before-publishing-screenshots)
 
 ## How to use this page
@@ -135,7 +134,7 @@ GET /_cat/shards?v&h=index,shard,prirep,state,unassigned.reason
 
 Rows with an unassigned state can include an `unassigned.reason` value that helps identify the event associated with the shard becoming unassigned. The supplied screenshot shows started shards, so the reason column is blank; that is expected and does not indicate a hidden allocation failure.
 
-For a specific unassigned shard, use the [Cluster Allocation Explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-allocation-explain) to ask Elasticsearch why it cannot be allocated and what deciders are preventing allocation. Do not treat the reason field alone as a complete remediation plan.
+For a specific unassigned shard, use the Cluster Allocation Explain API to ask Elasticsearch why it cannot be allocated and what deciders are preventing allocation. Do not treat the reason field alone as a complete remediation plan.
 
 ![Shard listing with allocation-reason column](./images/08.png)
 
@@ -182,18 +181,6 @@ Sorting by `store.size` puts the largest index totals at the top. Treat this as 
 ## Further administration examples
 
 For scoped examples covering health reports, node/task diagnostics, index lifecycle, slow-log configuration, snapshots, security inventory, and shard rerouting, see [Elasticsearch Administration: Diagnostic and Change APIs](./Few_queries.md). That companion guide also consolidates duplicate requests from the original notes and flags destructive or potentially disruptive operations.
-
-## References
-
-- [CAT APIs](https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-cat)
-- [CAT allocation API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-allocation)
-- [CAT shards API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-shards)
-- [CAT indices API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-indices)
-- [CAT nodes API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-nodes)
-- [CAT thread pool API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-thread-pool)
-- [CAT pending tasks API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-pending-tasks)
-- [Cluster health API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-health)
-- [Cluster Allocation Explain API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-allocation-explain)
 
 ## Before publishing screenshots
 

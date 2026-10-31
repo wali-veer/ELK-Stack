@@ -10,9 +10,9 @@
 - [Read documents](#read-documents)
 - [Update a document](#update-a-document)
 - [Delete a document or index](#delete-a-document-or-index)
+- [Bulk operations](#bulk-operations)
 - [What the original examples demonstrate](#what-the-original-examples-demonstrate)
 - [Operational habits](#operational-habits)
-- [References](#references)
 
 ## Before you start: choose a mapping
 
@@ -192,6 +192,95 @@ GET /_cat/indices/test-index?v
 
 If this is not the disposable index you intended to remove, do not proceed. Never replace the name with a wildcard.
 
+## Bulk operations
+
+The Bulk API sends multiple document operations in one HTTP request. This reduces request/connection overhead and is usually more efficient for ingestion than sending one request per document. It also supports mixing operations, which is useful for migrations or batched synchronization.
+
+Bulk requests use **NDJSON**: each action is a single-line JSON object, followed by a source/document line for `index`, `create`, and `update` actions. A `delete` action has no following source line. Keep each action and its document on separate lines, and ensure the request ends with a newline.
+
+### Index documents with explicit IDs
+
+```http
+POST /electronics_store/_bulk
+{"index":{"_id":"3"}}
+{"name":"Smartphone","price":699}
+{"index":{"_id":"4"}}
+{"name":"Laptop","price":1200}
+```
+
+`index` creates the document when the ID is new and replaces the full document if it already exists. The explicit IDs make it easy to retrieve these records:
+
+```http
+GET /electronics_store/_doc/4
+GET /electronics_store/_doc/3
+```
+
+For retry-sensitive ingestion, consider whether overwriting the same ID is acceptable. If duplicates must be rejected instead, use `create`; an existing ID then produces a conflict for that individual item.
+
+### Let Elasticsearch generate IDs
+
+```http
+POST /electronics_store/_bulk
+{"index":{}}
+{"name":"Smart Watch","price":149}
+{"index":{}}
+{"name":"Tablet","price":450}
+```
+
+Omitting `_id` lets Elasticsearch generate one for each document. Replaying this batch creates additional documents rather than replacing the earlier ones, so it is not an idempotent retry strategy.
+
+The notes used a decimal price (`149.99`). Keep this example integral because the earlier CRUD sequence can dynamically map `price` as a whole-number field. For decimal prices, create the index with a compatible mapping such as `double` before indexing any documents.
+
+### Send a batch to multiple indices
+
+```http
+POST /_bulk
+{"index":{"_index":"electronics_store","_id":"10"}}
+{"name":"Headphones","price":199}
+{"index":{"_index":"home_appliances","_id":"1"}}
+{"name":"Air Purifier","price":299}
+```
+
+An action can choose its target index using `_index`. In a controlled lab, create `home_appliances` and verify its mappings first. Whether an index can be auto-created depends on cluster settings and privileges; do not rely on implicit creation in production. Review the privileges needed for every index targeted by the batch.
+
+### Mix create, update, and delete actions
+
+```http
+POST /electronics_store/_bulk
+{"create":{"_id":"20"}}
+{"name":"Camera","price":800}
+{"update":{"_id":"1"}}
+{"doc":{"price":649}}
+{"delete":{"_id":"2"}}
+```
+
+This batch creates ID `20` only if it does not exist, partially updates the `price` for ID `1`, and deletes ID `2`. The delete action has no document/source line. The update action needs a `doc` object (or a script/upsert configuration).
+
+Bulk operations are **not a transaction**. Each item succeeds or fails independently: a conflict on the `create` does not roll back the update or delete, and successful items remain applied if another item fails.
+
+### Read and verify the bulk response
+
+The response contains an `errors` flag and an `items` array with one result per operation. Inspect each item's status and error details—HTTP success for the overall request does not mean every item succeeded. Common item-level issues include mapping errors, create conflicts, missing documents for update, and insufficient privileges.
+
+Search is near-real-time. A follow-up `_search` may not immediately show the batch unless a refresh has occurred. For a small lab, you can request visibility after the batch:
+
+```http
+POST /electronics_store/_bulk?refresh=wait_for
+{"index":{"_id":"30"}}
+{"name":"Lab Item","price":25}
+```
+
+`refresh=wait_for` waits for a refresh rather than forcing an immediate refresh. Avoid adding refresh behavior to every production batch without understanding the throughput trade-off.
+
+### Production batching considerations
+
+- Send bounded batches and tune batch size using measurements; very large requests can consume substantial memory and increase latency.
+- Handle item-level failures, and retry only failed items where safe.
+- Use stable IDs or create-only semantics deliberately; generated IDs can duplicate records when a request is replayed.
+- Keep mappings consistent across target indices, especially when using one bulk request for multiple indices.
+- Do not assume order-independent results when multiple actions target the same document; structure and test such batches carefully.
+- Bulk API reduces request overhead, but does not bypass shard capacity, mapping validation, refresh behavior, or backpressure.
+
 ## What the original examples demonstrate
 
 | Original operation | CRUD concept | Important behavior |
@@ -215,14 +304,3 @@ If this is not the disposable index you intended to remove, do not proceed. Neve
 - Test destructive operations only on disposable data and verify the target path carefully.
 - Keep credentials and real customer/product data out of screenshots and public examples.
 - Use the response's `result`, `_id`, and error details to verify what happened.
-
-## References
-
-- [Create or update a document API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-index)
-- [Create document API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-create)
-- [Get document API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get)
-- [Search API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search)
-- [Update document API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-update)
-- [Delete document API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-delete)
-- [Delete index API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete)
-- [Mappings](https://www.elastic.co/docs/manage-data/data-store/mapping)

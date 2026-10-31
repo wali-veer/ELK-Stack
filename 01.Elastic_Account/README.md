@@ -16,7 +16,6 @@
 - [A useful first-lab workflow](#a-useful-first-lab-workflow)
 - [Enterprise lessons to take away](#enterprise-lessons-to-take-away)
 - [Before publishing screenshots](#before-publishing-screenshots)
-- [References](#references)
 
 ## Why this lab matters
 
@@ -41,7 +40,7 @@ These are point-in-time observations, not service-level guarantees. The screensh
 
 ## Create an Elastic Cloud trial account
 
-1. Open [Elastic Cloud](https://cloud.elastic.co/) or start from Elastic's [Cloud signup page](https://www.elastic.co/cloud/elasticsearch-service/signup).
+1. Open the Elastic Cloud console and follow its account sign-up flow.
 2. Create an account and complete the identity/email verification steps presented by Elastic.
 3. Sign in to the Cloud Console and start the offered trial, if prompted. Read the current trial terms and billing requirements before accepting.
 4. Create an **Elastic Cloud Hosted** deployment. Select a name, cloud provider, region, and Elastic Stack version.
@@ -171,14 +170,3 @@ Cleanup completed:
 ## Before publishing screenshots
 
 These screenshots are useful learning evidence, but the deployment page visibly includes organization/deployment identifiers and configuration details. Before pushing the folder to a public GitHub repository, review each image and blur identifiers, account information, endpoints, email addresses, and any credentials or customer data. IDs may not be passwords, but they can expose account metadata. Never commit secrets, even in a screenshot.
-
-## References
-
-- [Elastic Cloud signup](https://www.elastic.co/cloud/elasticsearch-service/signup)
-- [Elastic Cloud Console](https://cloud.elastic.co/)
-- [Elastic Cloud pricing](https://www.elastic.co/pricing)
-- [Elastic Cloud billing](https://www.elastic.co/docs/deploy-manage/cloud-organization/billing)
-- [AutoOps overview](https://www.elastic.co/docs/deploy-manage/monitor/autoops)
-- [Access AutoOps for Elastic Cloud Hosted](https://www.elastic.co/docs/deploy-manage/monitor/autoops/ec-autoops-how-to-access)
-- [AutoOps views](https://www.elastic.co/docs/deploy-manage/monitor/autoops/views)
-- [AutoOps FAQ](https://www.elastic.co/docs/deploy-manage/monitor/autoops/ec-autoops-faq)

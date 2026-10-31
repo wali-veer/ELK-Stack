@@ -9,7 +9,6 @@
 - [Try it in Kibana Console](#try-it-in-kibana-console)
 - [From exploration to automation](#from-exploration-to-automation)
 - [Enterprise habits](#enterprise-habits)
-- [References](#references)
 
 ## What the APIs are for
 
@@ -80,10 +79,3 @@ Bulk APIs can return an HTTP-level response while individual items in the respon
 - Prefer documented APIs over CAT endpoints for integrations; CAT output is optimized for human inspection.
 - Use aliases or data streams where they support a stable application boundary, rather than coupling every client to physical backing-index names.
 - Record API version, request, privileges, expected response, and rollback or recovery considerations.
-
-## References
-
-- [Elasticsearch API reference](https://www.elastic.co/docs/api/doc/elasticsearch)
-- [Run API requests with Console](https://www.elastic.co/docs/explore-analyze/query-filter/tools/console)
-- [Cluster health API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-health)
-- [Search API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search)

@@ -10,7 +10,6 @@
 - [Run EQL through the API](#run-eql-through-the-api)
 - [Data requirements and query quality](#data-requirements-and-query-quality)
 - [EQL in an enterprise detection workflow](#eql-in-an-enterprise-detection-workflow)
-- [References](#references)
 
 ## When EQL helps
 
@@ -86,10 +85,3 @@ Check the current API reference for exact request options and response fields su
 ## EQL in an enterprise detection workflow
 
 Treat a detection as an operational artifact, not just a query string. Document the behavior it represents, required fields and data sources, expected false positives, time bounds, owner, and response action. Version it in source control, validate it on representative data, and monitor both detection quality and query cost over time.
-
-## References
-
-- [EQL overview](https://www.elastic.co/docs/explore-analyze/query-filter/languages/eql)
-- [EQL syntax reference](https://www.elastic.co/docs/reference/query-languages/eql)
-- [EQL search API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-eql-search)
-- [Elastic Common Schema (ECS)](https://www.elastic.co/docs/reference/ecs)

@@ -1,0 +1,28 @@
+Write the .md file covering the below points and order the topics correctly.
+
+What is DSL - Domain specific language. Based on JSON.
+Query (root object) has -
+    Leaf query cluases (Has example - match, term or range query)
+    Compound query clauses (Combine multiple conditions)
+
+Bool queries -
+    must
+    Should
+    must_not
+    filter
+    
+
+Search result comes with numerical value called _score - high score and low score
+Term frequency (density)
+Inverse document frequency ( Rerity)
+
+Precision and recall - balance act 
+
+Full-Text match
+Term queries (term queries)
+Range operarions
+Aggregations
+
+Minimum_should_match ==> OR --> High recall ; AND --> High precision
+
+

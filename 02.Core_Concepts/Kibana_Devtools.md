@@ -57,4 +57,3 @@ Review and redact endpoint URLs, internal addresses, index names, and account/de
 - [Shell: send and inspect requests](./Kibana_Devtools_Shell.md)
 - [History: revisit requests](./Kibana_Devtools_History.md)
 - [Config: customize Console](./Kibana_Devtools_Config.md)
-- [Elastic documentation: Run API requests with Console](https://www.elastic.co/docs/explore-analyze/query-filter/tools/console)

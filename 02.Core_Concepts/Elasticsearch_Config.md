@@ -9,7 +9,6 @@
 - [Cluster settings and precedence](#cluster-settings-and-precedence)
 - [A safe settings workflow](#a-safe-settings-workflow)
 - [Configuration as code](#configuration-as-code)
-- [References](#references)
 
 ## Choose the right configuration surface
 
@@ -74,10 +73,3 @@ Configuration is an operational contract. An undocumented override can outlive t
 ## Configuration as code
 
 Treat repeatable settings as reviewed change artifacts: keep sanitized templates in version control, parameterize environment-specific values, and separate secrets into an approved secrets manager. Where configuration is managed through a provider or deployment API, track the desired state and verify that the live deployment has converged to it.
-
-## References
-
-- [Configure Elasticsearch](https://www.elastic.co/docs/deploy-manage/deploy/self-managed/configure-elasticsearch)
-- [Elasticsearch configuration reference](https://www.elastic.co/docs/reference/elasticsearch/configuration-reference)
-- [Cluster Update Settings API](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-put-settings)
-- [Elastic Cloud Hosted settings](https://www.elastic.co/docs/deploy-manage/stack-settings)
