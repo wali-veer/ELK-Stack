@@ -35,7 +35,7 @@ This guide expands the administration requests collected in `Few_queries`. It re
 
 Run API examples in **Kibana → Dev Tools → Console**. Start with read-only checks, identify the exact index or task, and understand the expected result before making a change. Save the current state and define a rollback or recovery plan for operational changes.
 
-The [operational query guide](./README.md) remains the canonical page for the CAT examples and their screenshots. This page includes a few CAT requests where they provide useful context for a deeper administrative API, and focuses on additional diagnostics and safe lab examples.
+For document-level Create, Read, Update, and Delete examples, see [Elasticsearch CRUD Operations](./CRUD.md). This guide focuses on additional diagnostics and safe lab examples of index, allocation, task, and snapshot administration.
 
 ## 1. Read-only diagnostics
 
@@ -236,7 +236,9 @@ GET /_cat/shards?v&h=index,shard,prirep,state,unassigned.reason
 GET /_cat/allocation?v
 ```
 
-The CAT output screenshots are included in the [operational query guide](./README.md#7-full-allocation-view) and its [unassigned-shard section](./README.md#8-shards-with-allocation-reasons).
+The allocation overview is shown below; the shard listing is included in the unassigned-shard section.
+
+![Full shard allocation overview](./images/07.png)
 
 For the reason a particular shard is unassigned, ask the Allocation Explain API:
 
@@ -332,7 +334,7 @@ POST /_tasks/NODE_ID:TASK_NUMBER/_cancel
 
 ## Queries consolidated or omitted
 
-- Duplicate `GET /_cluster/health`, `GET /_cluster/settings`, `GET /_cat/indices`, `GET /_cat/shards`, and `GET /_cat/nodes` entries were consolidated. The core CAT checks remain in the [operational query guide](./README.md).
+- Duplicate `GET /_cluster/health`, `GET /_cluster/settings`, `GET /_cat/indices`, `GET /_cat/shards`, and `GET /_cat/nodes` entries were consolidated. Related CAT examples are retained in this guide where they support an administrative workflow.
 - `GET /_cluster/settings` variants are represented by one query with defaults and flat keys.
 - Variants of `GET /_health_report` differ only in method capitalization or slash formatting; one canonical form is retained.
 - Generic broad queries such as `GET /_nodes`, `GET /_nodes/stats`, and `GET /_cluster/state` are discussed with scoped examples to avoid huge responses.

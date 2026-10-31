@@ -1,0 +1,43 @@
+PUT electronics_store
+
+GET /_cat/indices/electronics_store?v
+
+POST electronics_store/_doc
+{
+  "name":"wireless headphones",
+  "price": 2000
+}
+
+GET /electronics_store/_search
+
+PUT electronics_store/_doc/1
+{
+  "name" : "Bluetooth Speaker",
+  "price" : "999.99"
+}
+
+GET electronics_store/_doc/1
+
+PUT electronics_store/_doc/1
+{
+  "name" : "Microphone",
+  "price" : "1000.99"
+}
+
+PUT electronics_store/_create/2
+{
+  "name" : "Smart Watch",
+  "price" : "20000"
+}
+
+POST electronics_store/_update/1
+{
+  "doc": {
+    "price" : 599.0
+  }
+}
+
+
+DELETE electronics_store/_doc/1
+
+DELETE test-index
