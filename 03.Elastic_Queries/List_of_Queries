@@ -1,0 +1,1475 @@
+#=======================
+get electronics_store
+
+PUT electronics_store/_settings
+{
+  "number_of_replicas": 2
+}
+
+GET electronics_store/_settings
+
+PUT customers
+{
+  "settings": {
+    "index.number_of_shards": 1,
+    "number_of_replicas": 2
+  }
+}
+
+GET customers/_settings
+
+# ====================================
+POST /electronics_store/_bulk
+{
+   "index":{
+      "_id":"3"
+   }
+}{
+   "name":"Smartphone",
+   "price":699
+}{
+   "index":{
+      "_id":"4"
+   }
+}{
+   "name":"Laptop",
+   "price":1200
+}
+
+
+GET electronics_store/_search
+
+
+GET /electronics_store/_doc/4
+GET /electronics_store/_doc/3
+
+
+POST /electronics_store/_bulk
+{
+   "index":{
+     
+   }
+}{
+   "name":"Smart Watch",
+   "price":149.99
+}{
+   "index":{
+     
+   }
+}{
+   "name":"Tablet",
+   "price":450
+}
+
+
+POST /_bulk
+{
+   "index":{
+      "_index":"electronics_store",
+      "_id":"10"
+   }
+}{
+   "name":"Headphones",
+   "price":199
+}{
+   "index":{
+      "_index":"home_appliances",
+      "_id":"1"
+   }
+}{
+   "name":"Air Purifier",
+   "price":299
+}
+
+
+GET home_appliances/_search
+
+
+GET /_cat/indices/home_appliances?v
+
+
+POST /electronics_store/_bulk
+{
+   "create":{
+      "_id":"20"
+   }
+}{
+   "name":"Camera",
+   "price":800
+}{
+   "update":{
+      "_id":"1"
+   }
+}{
+   "doc":{
+      "price":649
+   }
+}{
+   "delete":{
+      "_id":"2"
+   }
+}
+
+
+DELETE electronics_store
+
+DELETE home_appliances
+
+
+
+
+
+
+
+# ==========================
+
+PUT electronics_store
+
+GET /_cat/indices/electronics_store?v
+
+POST electronics_store/_doc
+{
+  "name":"wireless headphones",
+  "price": 2000
+}
+
+GET /electronics_store/_search
+
+PUT electronics_store/_doc/1
+{
+  "name" : "Bluetooth Speaker",
+  "price" : "999.99"
+}
+
+GET electronics_store/_doc/1
+
+PUT electronics_store/_doc/1
+{
+  "name" : "Microphone",
+  "price" : "1000.99"
+}
+
+PUT electronics_store/_create/2
+{
+  "name" : "Smart Watch",
+  "price" : "20000"
+}
+
+POST electronics_store/_update/1
+{
+  "doc": {
+    "price" : 599.0
+  }
+}
+
+
+DELETE electronics_store/_doc/1
+
+DELETE test-index
+
+
+
+
+
+
+# ======================
+GET /_cluster/health
+
+GET /_cat/indices?v
+
+GET /_cat/shards?v
+
+get /_health_report
+
+GET _health_report
+
+GET /_cat/health?v
+
+GET /_cat/nodes?v
+
+GET /_cat/master?v
+
+GET /_search/slowlog
+
+GET /_cluster/health
+
+GET /_cluster/health?level=indices
+
+GET /_cluster/stats
+
+GET /_cluster/settings
+
+GET /_cluster/settings?include_defaults=true
+
+GET /_cluster/state
+
+GET /_nodes
+
+GET /_nodes/stats
+
+GET /_nodes/hot_threads
+
+GET /_cluster/settings
+
+GET /_cat/indices?v
+
+PUT test-index
+
+GET /test-index/_settings
+
+GET /test-index/_mapping
+
+POST /test-index/_forcemerge?max_num_segments=1
+
+POST /test-index/_close
+
+GET /_cat/indices/test-index?v
+
+POST /test-index/_open
+
+GET /_cat/indices/test-index?v
+
+PUT delete-index
+
+GET /_cat/indices/delete-index?v
+
+DELETE delete-index
+
+GET /_cat/indices/delete-index?v
+
+GET /_cat/shards?v
+
+GET /_cat/shards/test-index?v
+
+POST /_cluster/allocation/explain
+
+POST /_cluster/reroute
+{"commands": [
+  {
+    "move": {
+      "index": "test-index",
+      "shard": 0,
+      "from_node": "NODE-NAME-1",
+      "to_node": "NODE-NAME-2"
+    }
+  }
+]}
+
+
+GET /_search/slowlog
+
+PUT /test-index/_settings
+{
+    "index.search.slowlog.threshold.query.warn": "10s",
+    "index.search.slowlog.threshold.fetch.warn": "1s"
+}
+
+GET /_snapshot
+
+PUT /_snapshot/test-index/snapshot_1?wait_for_completion=true
+
+POST /_snapshot/my_backup/snapshot_1/_restore
+
+PUT /_cluster/settings
+
+PUT /_cluster/settings
+{
+    "persistent":{
+        "cluster.routing.allocation.enable": "all"
+    }
+}
+
+GET /_tasks?detailed=true
+
+GET /_tasks
+
+GET /_tasks?detailed=true&actions=geoip*
+
+POST /_tasks/task_id:12345/_cancel
+
+GET /_security/user
+
+GET /_security/role
+
+GET /_security/role_mapping
+
+GET /_cat/shards?v&h=index,shard,prirep,state,unassigned.reason
+
+GET /_cat/allocation?v
+
+GET /_cat/indices?v&s=store.size:desc
+
+GET /_cat/thread_pool?v
+
+GET /_nodes/stats/jvm
+
+GET /_cat/nodes?v&h=name,heap.percent,ram.percent,cpu,load,node.role
+
+GET /_cat/indices?v&h=index,health,status,pri,rep,docs.count,store.size
+
+GET /_cat/shards?v&h=index,shard,prirep,state,docs,store,node
+
+GET /_cat/allocation?v&h=shards,disk.indices,disk.used,disk.avail,disk.total,node
+
+GET /_cat/pending_tasks?v
+
+GET /_cat/recovery?v&active_only=true
+
+GET /_cluster/settings?include_defaults=true&flat_settings=true
+
+GET /_nodes/stats/jvm,fs,process,thread_pool
+
+get /_cat/indices
+
+GET /.ds-traces-agent_builder.otel-default-2026.10.30-000001/_ilm/explain
+
+GET /_health_report
+
+GET /_cat/health?v
+
+GET /_cat/nodes?v
+
+GET /_cat/indices?v
+
+GET /_cat/shards/test-index?v&h=node,prirep,docs,index
+
+GET /_cat/shards/test-index?v
+
+GET /_cat/shards?v
+
+
+PUT /_cluster/settings
+{
+  "persistent": {
+    "cluster.routing.allocation.enable": "all"
+  }
+}
+
+#==================
+
+GET udemy_courses/_search
+
+GET udemy_courses/_search
+{
+  "query": {
+    "match_all": {}
+    }
+}
+
+GET udemy_courses/_search
+{
+  "query": {
+    "match": {
+      "level": {
+        "query": "Intermediate Level"
+      }
+    }
+  }
+}
+
+GET udemy_courses/_search
+{
+  "query": {
+    "match": {
+      "course_title": {
+        "query": "python programming"
+      }
+    }
+  }
+}
+
+GET udemy_courses/_search
+{
+  "query": {
+    "match": {
+      "course_title": {
+        "query": "python programming",
+        "operator": "and"
+        }
+    }}
+}
+
+GET udemy_courses/_search
+{
+  "query": {
+    "match": {
+      "course_title": {
+        "query": "Python programming language",
+        "minimum_should_match" : 2
+      }
+    }
+  }
+}
+
+GET udemy_courses/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "business",
+      "fields": ["subject","course_title"]
+    }
+  }
+}
+
+GET udemy_courses/_search
+{
+  "size": 100,
+  "query": {
+    "multi_match": {
+      "query": "business",
+      "fields": ["subject","course_title"]    
+    }
+  }
+}
+
+GET udemy_courses/_search
+{
+  "size": 30,
+  "query": {
+    "match": {
+      "course_title": "Investment Banking"
+    }
+  }
+}
+
+GET udemy_courses/_search
+{
+  "query": {
+    "bool": {
+      "must": 
+      [
+        {"match": { "course_title": "investiment banking"}}
+      ],
+      "filter": 
+      [
+        {"term": { "subject": "Business Finance"}},
+        {"term": { "is_paid": "True"}},
+        {"term": { "level": "Intermediate Level"}}
+      ]
+    }
+  }
+}
+
+
+GET udemy_courses/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        { "match": { "course_title": "Investment Banking" }}
+      ],
+      "filter": [
+        {"range": { "price": { "lte": 100 }}}
+      ],
+      "must_not": [
+        {"term": {"level":"Beginner Level"}}
+      ]
+    }
+  }
+}
+
+GET udemy_courses/_search
+{
+  "size": 0,
+  "aggs": {
+    "Popular topics": {
+      "terms": {
+        "field": "subject"}
+    }
+  }  
+}
+
+
+
+#======================
+
+
+GET udemy_courses/_mapping
+
+
+GET /_cat/health
+
+GET /_cluster/health/customers
+
+
+
+
+#==================
+
+PUT /sample-logs
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 1
+  },
+  "mappings": {
+    "properties": {
+      "@timestamp": { "type": "date" },
+      "log": {
+        "properties": {
+          "level": { "type": "keyword" }
+        }
+      },
+      "service": {
+        "properties": {
+          "name": { "type": "keyword" }
+        }
+      },
+      "event": {
+        "properties": {
+          "dataset": { "type": "keyword" },
+          "duration": { "type": "long" },
+          "outcome": { "type": "keyword" }
+        }
+      },
+      "http": {
+        "properties": {
+          "request": {
+            "properties": {
+              "method": { "type": "keyword" }
+            }
+          },
+          "response": {
+            "properties": {
+              "status_code": { "type": "integer" }
+            }
+          }
+        }
+      },
+      "url": {
+        "properties": {
+          "path": { "type": "keyword" }
+        }
+      },
+      "source": {
+        "properties": {
+          "ip": { "type": "ip" },
+          "geo": {
+            "properties": {
+              "location": { "type": "geo_point" }
+            }
+          }
+        }
+      },
+      "user": {
+        "properties": {
+          "id": { "type": "keyword" },
+          "name": { "type": "keyword" }
+        }
+      },
+      "user_agent": {
+        "properties": {
+          "original": { "type": "text", "fields": { "keyword": { "type": "keyword" } } }
+        }
+      },
+      "labels": { "type": "object" },
+      "message": { "type": "text" },
+      "error": {
+        "properties": {
+          "code": { "type": "keyword" }
+        }
+      }
+    }
+  }
+}
+
+
+GET /_cat/indices/sample-logs?v
+
+
+POST /sample-logs/_bulk
+{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-25T08:00:00Z",
+   "service":{
+      "name":"api-gateway"
+   },
+   "log":{
+      "level":"info"
+   },
+   "message":"Request processed",
+   "http":{
+      "request":{
+         "method":"GET"
+      },
+      "response":{
+         "status_code":200
+      }
+   },
+   "url":{
+      "path":"/api/v1/products"
+   },
+   "event":{
+      "duration":45000000,
+      "dataset":"gateway.logs"
+   },
+   "tags":[
+      "api"
+   ]
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-25T09:00:00Z",
+   "service":{
+      "name":"payment-service"
+   },
+   "log":{
+      "level":"error"
+   },
+   "message":"Payment declined - insufficient funds",
+   "user":{
+      "id":"U1001"
+   },
+   "http":{
+      "request":{
+         "method":"POST"
+      },
+      "response":{
+         "status_code":400
+      }
+   },
+   "error":{
+      "code":"INSUFFICIENT_FUNDS"
+   },
+   "labels":{
+      "amount":299.99,
+      "payment_method":"credit_card"
+   },
+   "source":{
+      "ip":"192.168.1.100",
+      "geo":{
+         "location":"40.7128,-74.0060"
+      }
+   },
+   "event":{
+      "duration":120000000
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-25T10:15:00Z",
+   "service":{
+      "name":"checkout-service"
+   },
+   "log":{
+      "level":"info"
+   },
+   "message":"Checkout completed successfully",
+   "user":{
+      "id":"U4001"
+   },
+   "http":{
+      "response":{
+         "status_code":201
+      }
+   },
+   "event":{
+      "duration":450000000,
+      "outcome":"success"
+   },
+   "labels":{
+      "amount":299.99
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-25T11:30:00Z",
+   "service":{
+      "name":"cart-service"
+   },
+   "log":{
+      "level":"info"
+   },
+   "message":"Item added to cart",
+   "user":{
+      "id":"U5001"
+   },
+   "labels":{
+      "product_id":"P1234",
+      "amount":299.99
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-25T13:45:00Z",
+   "service":{
+      "name":"inventory-service"
+   },
+   "log":{
+      "level":"warn"
+   },
+   "message":"Low stock alert - P1234",
+   "labels":{
+      "product_id":"P1234",
+      "current_stock":9
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-25T15:00:00Z",
+   "service":{
+      "name":"auth-service"
+   },
+   "log":{
+      "level":"warn"
+   },
+   "message":"Failed login",
+   "user":{
+      "id":"U3001"
+   },
+   "source":{
+      "ip":"203.0.113.75"
+   },
+   "error":{
+      "code":"INVALID_PASSWORD"
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-25T16:20:00Z",
+   "service":{
+      "name":"api-gateway"
+   },
+   "log":{
+      "level":"info"
+   },
+   "message":"Request processed",
+   "url":{
+      "path":"/api/v1/cart"
+   },
+   "event":{
+      "duration":55000000
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-25T18:10:00Z",
+   "service":{
+      "name":"payment-service"
+   },
+   "log":{
+      "level":"error"
+   },
+   "message":"Payment declined",
+   "user":{
+      "id":"U1002"
+   },
+   "error":{
+      "code":"INSUFFICIENT_FUNDS"
+   },
+   "labels":{
+      "amount":450.50
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-25T20:30:00Z",
+   "service":{
+      "name":"checkout-service"
+   },
+   "log":{
+      "level":"info"
+   },
+   "message":"Checkout success",
+   "user":{
+      "id":"U4002"
+   },
+   "labels":{
+      "amount":450.50
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-25T22:00:00Z",
+   "service":{
+      "name":"inventory-service"
+   },
+   "log":{
+      "level":"warn"
+   },
+   "message":"Low stock alert - P5678",
+   "labels":{
+      "product_id":"P5678",
+      "current_stock":8
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-26T02:00:00Z",
+   "service":{
+      "name":"auth-service"
+   },
+   "log":{
+      "level":"warn"
+   },
+   "message":"Failed login",
+   "user":{
+      "name":"admin"
+   },
+   "source":{
+      "ip":"203.0.113.75"
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-26T04:15:00Z",
+   "service":{
+      "name":"auth-service"
+   },
+   "log":{
+      "level":"warn"
+   },
+   "message":"Failed login",
+   "user":{
+      "name":"root"
+   },
+   "source":{
+      "ip":"203.0.113.75"
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-26T06:30:00Z",
+   "service":{
+      "name":"auth-service"
+   },
+   "log":{
+      "level":"critical"
+   },
+   "message":"Brute force detected",
+   "source":{
+      "ip":"203.0.113.75"
+   },
+   "labels":{
+      "attempts":10
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-26T08:45:00Z",
+   "service":{
+      "name":"api-gateway"
+   },
+   "log":{
+      "level":"info"
+   },
+   "message":"Search processed",
+   "url":{
+      "path":"/api/v1/search"
+   },
+   "event":{
+      "duration":110000000
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-26T10:00:00Z",
+   "service":{
+      "name":"payment-service"
+   },
+   "log":{
+      "level":"error"
+   },
+   "message":"Card expired",
+   "user":{
+      "id":"U1006"
+   },
+   "error":{
+      "code":"CARD_EXPIRED"
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-26T12:20:00Z",
+   "service":{
+      "name":"checkout-service"
+   },
+   "log":{
+      "level":"info"
+   },
+   "message":"Checkout success",
+   "user":{
+      "id":"U4003"
+   },
+   "labels":{
+      "amount":899.99
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-26T14:40:00Z",
+   "service":{
+      "name":"inventory-service"
+   },
+   "log":{
+      "level":"error"
+   },
+   "message":"Stock update failed",
+   "labels":{
+      "product_id":"P1234",
+      "error_code":"OUT_OF_STOCK"
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-26T16:55:00Z",
+   "service":{
+      "name":"cart-service"
+   },
+   "log":{
+      "level":"info"
+   },
+   "message":"Item added",
+   "user":{
+      "id":"U5002"
+   },
+   "labels":{
+      "product_id":"P5678"
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-26T19:15:00Z",
+   "service":{
+      "name":"api-gateway"
+   },
+   "log":{
+      "level":"info"
+   },
+   "message":"Request processed",
+   "url":{
+      "path":"/api/v1/products"
+   },
+   "event":{
+      "duration":90000000
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-26T21:30:00Z",
+   "service":{
+      "name":"payment-service"
+   },
+   "log":{
+      "level":"error"
+   },
+   "message":"Insufficient funds",
+   "user":{
+      "id":"U1008"
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-27T01:00:00Z",
+   "service":{
+      "name":"auth-service"
+   },
+   "log":{
+      "level":"critical"
+   },
+   "message":"IP Blocked",
+   "source":{
+      "ip":"203.0.113.75"
+   },
+   "labels":{
+      "duration_min":60
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-27T03:20:00Z",
+   "service":{
+      "name":"checkout-service"
+   },
+   "log":{
+      "level":"warn"
+   },
+   "message":"Checkout slow",
+   "event":{
+      "duration":5200000000
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-27T05:40:00Z",
+   "service":{
+      "name":"api-gateway"
+   },
+   "log":{
+      "level":"warn"
+   },
+   "message":"Slow response",
+   "url":{
+      "path":"/api/v1/checkout"
+   },
+   "event":{
+      "duration":1800000000
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-27T08:00:00Z",
+   "service":{
+      "name":"payment-service"
+   },
+   "log":{
+      "level":"error"
+   },
+   "message":"Gateway timeout",
+   "http":{
+      "response":{
+         "status_code":500
+      }
+   },
+   "event":{
+      "duration":5200000000
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-27T10:15:00Z",
+   "service":{
+      "name":"inventory-service"
+   },
+   "log":{
+      "level":"warn"
+   },
+   "message":"Low stock",
+   "labels":{
+      "product_id":"P9012",
+      "stock":2
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-27T12:30:00Z",
+   "service":{
+      "name":"cart-service"
+   },
+   "log":{
+      "level":"info"
+   },
+   "message":"Cart abandoned",
+   "user":{
+      "id":"U5001"
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-27T14:45:00Z",
+   "service":{
+      "name":"checkout-service"
+   },
+   "log":{
+      "level":"error"
+   },
+   "message":"Checkout failed - timeout",
+   "http":{
+      "response":{
+         "status_code":504
+      }
+   },
+   "event":{
+      "duration":6100000000
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-27T17:00:00Z",
+   "service":{
+      "name":"api-gateway"
+   },
+   "log":{
+      "level":"warn"
+   },
+   "message":"Slow response",
+   "url":{
+      "path":"/api/v1/payments"
+   },
+   "event":{
+      "duration":2200000000
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-27T19:15:00Z",
+   "service":{
+      "name":"payment-service"
+   },
+   "log":{
+      "level":"error"
+   },
+   "message":"Gateway timeout",
+   "event":{
+      "duration":6100000000
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-27T21:30:00Z",
+   "service":{
+      "name":"checkout-service"
+   },
+   "log":{
+      "level":"error"
+   },
+   "message":"Payment declined",
+   "user":{
+      "id":"U4007"
+   },
+   "error":{
+      "code":"PAYMENT_DECLINED"
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-28T00:45:00Z",
+   "service":{
+      "name":"inventory-service"
+   },
+   "log":{
+      "level":"error"
+   },
+   "message":"Out of stock during checkout",
+   "labels":{
+      "product_id":"P5678"
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-28T03:00:00Z",
+   "service":{
+      "name":"api-gateway"
+   },
+   "log":{
+      "level":"error"
+   },
+   "message":"Request timeout",
+   "http":{
+      "response":{
+         "status_code":504
+      }
+   },
+   "event":{
+      "duration":5000000000
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-28T05:15:00Z",
+   "service":{
+      "name":"cart-service"
+   },
+   "log":{
+      "level":"info"
+   },
+   "message":"Cart abandoned",
+   "user":{
+      "id":"U5002"
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-28T07:30:00Z",
+   "service":{
+      "name":"checkout-service"
+   },
+   "log":{
+      "level":"error"
+   },
+   "message":"Out of stock",
+   "user":{
+      "id":"U4009"
+   },
+   "error":{
+      "code":"OUT_OF_STOCK"
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-28T09:45:00Z",
+   "service":{
+      "name":"payment-service"
+   },
+   "log":{
+      "level":"error"
+   },
+   "message":"Insufficient funds",
+   "user":{
+      "id":"U1010"
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-28T12:00:00Z",
+   "service":{
+      "name":"inventory-service"
+   },
+   "log":{
+      "level":"warn"
+   },
+   "message":"Low stock",
+   "labels":{
+      "product_id":"P3456",
+      "stock":1
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-28T14:15:00Z",
+   "service":{
+      "name":"checkout-service"
+   },
+   "log":{
+      "level":"error"
+   },
+   "message":"Gateway error",
+   "user":{
+      "id":"U4010"
+   },
+   "http":{
+      "response":{
+         "status_code":500
+      }
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-28T16:30:00Z",
+   "service":{
+      "name":"api-gateway"
+   },
+   "log":{
+      "level":"warn"
+   },
+   "message":"Slow response",
+   "url":{
+      "path":"/api/v1/checkout"
+   },
+   "event":{
+      "duration":2100000000
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-28T18:45:00Z",
+   "service":{
+      "name":"cart-service"
+   },
+   "log":{
+      "level":"info"
+   },
+   "message":"Item added",
+   "user":{
+      "id":"U5003"
+   },
+   "labels":{
+      "product_id":"P9012"
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-28T21:00:00Z",
+   "service":{
+      "name":"payment-service"
+   },
+   "log":{
+      "level":"error"
+   },
+   "message":"Insufficient funds",
+   "user":{
+      "id":"U1005"
+   }
+}{
+   "index":{
+      
+   }
+}{
+   "@timestamp":"2026-02-28T23:15:00Z",
+   "service":{
+      "name":"checkout-service"
+   },
+   "log":{
+      "level":"info"
+   },
+   "message":"Checkout success",
+   "user":{
+      "id":"U4004"
+   }
+}
+
+GET /sample-logs/_search
+{ "size": 20 }
+
+GET /sample-logs/_search
+{ "query": 
+    {   
+        "term": {
+          "log.level" : "error"
+          }
+    }
+}
+
+
+GET /sample-logs/_search
+{
+    "query": {
+        "bool": {
+            "filter": [
+              {"term": {"service.name": "payment-service"}},
+              {"term" : {"log.level": "error"}},
+              {"term": {"error.code": "INSUFFICIENT_FUNDS"}}
+            ]
+        }
+    }
+}
+
+
+GET /sample-logs/_search
+{
+    "size": 0,
+    "aggs": {
+      "Error_Type_Count": {
+        "terms": {
+            "field": "error.code"
+        }
+      }
+    }
+}
+
+
+GET /sample-logs/_search
+{
+    "size": 0 ,
+    "aggs": {
+      "types_of_log_level_counts": {
+        "terms": {
+          "field": "log.level"
+        }
+      }
+    }
+}
+
+GET /sample-logs/_search
+{
+    "query": {
+        "range": {
+          "event.duration": {
+            "gte": 1000000000
+          }
+        }
+    }
+}
+
+GET /sample-logs/_search
+{
+    "size": 0,
+    "aggs": {
+      "logaByService": {
+        "terms": {
+            "field": "service.name"
+        }
+      }
+    }
+}
+
+GET /sample-logs/_search
+{
+    "size": 0,
+    "aggs": {
+        "Service_log": {
+            "terms": {
+                "field": "service.name"
+            },
+            "aggs": {
+                "levelPerService": {
+                    "terms": {
+                        "field": "log.level"
+                    }
+                }
+            }
+        }   
+    }
+}
+
